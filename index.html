@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vietnes Nosaukums</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Pamata stils */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: linear-gradient(135deg, #7c7e9b, #525253);
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+        }
+        nav {
+            margin-top: 10px;
+        }
+        nav ul {
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            list-style-type: none;
+        }
+        nav a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: rgb(129, 177, 209);
+        }
+        .dropdown {
+            display: none;
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.9);
+            z-index: 1;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        nav li {
+            position: relative;
+            margin: 0 10px;
+        }
+        nav li:hover .dropdown {
+            display: block;
+        }
+        .dropdown a {
+            color: #333;
+            padding: 10px 20px;
+            display: block;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .dropdown a:hover {
+            background-color: #575757;
+            color: rgb(145, 133, 197);
+        }
+        main {
+            display: flex;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+        section {
+            flex: 3;
+            margin-right: 20px;
+        }
+        aside {
+            flex: 1;
+            background-color: #9b9b9b;
+            padding: 20px;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        .card-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 300px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            animation: fadeIn 0.5s ease-out;
+        }
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .card-content {
+            padding: 20px;
+        }
+        .card h2 {
+            margin: 0 0 10px;
+        }
+        .card p {
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .card button {
+            background: linear-gradient(135deg, #575352, #475c68);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .card button:hover {
+            background: linear-gradient(135deg, #aadbeb, #5a717e);
+            transform: scale(1.05);
+        }
+        /* Hover efekti kartītēm */
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        /* Tumšā režīma stili */
+body.dark-mode {
+    background-color: #121212; /* Tumša fona krāsa */
+    color: #ffffff; /* Balta teksta krāsa */
+}
+
+header.dark-mode {
+    background: linear-gradient(135deg, #1f1f1f, #2c2c2c); /* Tumšs fons galvenē */
+}
+
+.card.dark-mode {
+    background-color: #2a2a2a; /* Tumša fona krāsa kartītēm */
+    color: #ffffff; /* Balta teksta krāsa kartītēs */
+}
+
+.card.dark-mode p {
+    color: #ccc; /* Gaiši pelēka teksta krāsa kartītēs */
+}
+
+aside.dark-node {
+    background-color:#1d1d1d;
+}
+     
+footer.dark-mode {
+    background-color: #1a1a1a; /* Tumšs fons kājenē */
+}
+        /* Keyframes animācija kartītes iekraušanai */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            width: 400px;
+        }
+        .close {
+            cursor: pointer;
+        }
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .hamburger span {
+            height: 3px;
+            width: 25px;
+            background: white;
+            margin: 4px;
+        }
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .navbar.active .nav-links {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                background: #333;
+                width: 100%;
+            }
+            .nav-links a {
+                padding: 10px;
+                border-top: 1px solid white;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Galvene -->
+    <header>
+        
+        <h1>Inf.Audi</h1>
+        <button id="dark-mode-toggle" style="margin-top: 10px; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Pārsla tumšo režīmu</button>
+
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#about"><i class="fas fa-user"></i> About</a></li>
+                <li>
+                    <a href="#" class="dropdown-toggle"><i class="fas fa-cogs"></i> Services</a>
+                    <ul class="dropdown">
+                        <li><a href="#">Web Design</a></li>
+                        <li><a href="#">SEO</a></li>
+                        <li><a href="#">Marketing</a></li>
+                    </ul>
+                </li>
+                <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Galvenā sadaļa -->
+    <main>
+        <section>
+            <h1>Laipni lūdzam Inf.Audi!</h1>
+            <h2>Šī ir galvenā sadaļa</h2>
+            <p>Ja vēlaties uzzināt vairāk par vēlamo automašīnu, esat nonācis īstajā vietā.</p>
+            <img src="https://electro-kot.ru/image/cache/catalog/123/5d.logo/66a1d29e4040276b49633e717d691b64.jpg" width="300" alt="Vietnes attēls">
+        </section>
+
+        <!-- Sānu josla -->
+        <aside>
+            <h2>Iespējas</h2>
+            <ul>
+                <li><a href="#">dizaini</a></li>
+                <li><a href="#">modeļi</a></li>
+                <li><a href="#">īpašības</a></li>
+            </ul>
+        </aside>
+    </main>
+
+    <!-- Kartītes -->
+    <div class="card-container">
+        <!-- Pirmā kartīte -->
+        <div class="card">
+            <img src="https://www.carscoops.com/wp-content/uploads/2020/06/audi-rs-q8-vorsprung-pack-for-sale-uk-36-1024x555.jpg" alt="Produkta attēls">
+            <div class="card-content">
+                <h2>Audi RS Q8 SUV</h2>
+                <p>No 0 līdz 100 km/h tikai 3,6 sekundēs.</p>
+                <button class="learn-more" data-description="Audi RS Q8 ir augstas veiktspējas SUV ar 600 zirgspēkiem. Tas ir ideāls apvienojums starp komfortu un jaudu, ar modernas tehnoloģijas un elegantu dizainu.">Pievienot grozam</button>
+            </div>
+        </div>
+
+        <!-- Otrā kartīte -->
+        <div class="card">
+            <img src="https://www.audi.lv/content/dam/nemo/models/a4/a4-limousine/my-2021/1920x1080-inline-media-gallery/1920x1080-audi-a4-sedan-exterior-AA4_L_191004_1.jpg" alt="Produkta attēls">
+            <div class="card-content">
+                <h2>Audi A4 Sedan</h2>
+                <p>Sportiskais un elegants sedans ar modernu tehnoloģiju.</p>
+                <button class="learn-more" data-description="Audi A4 ir populārs sedans ar izsmalcinātu dizainu un augstu komfortu. Tā piedāvā izcilu vadāmību un augstākās klases iekārtas.">Pievienot grozam</button>
+            </div>
+        </div>
+
+        <!-- Trešā kartīte -->
+        <div class="card">
+            <img src="https://hips.hearstapps.com/hmg-prod/images/2024-audi-a5-101-64bacb64baa2d.jpg?crop=0.697xw:0.618xh;0.259xw,0.332xh&resize=1200:*" alt="Produkta attēls">
+            <div class="card-content">
+                <h2>Audi A5 Sportback</h2>
+                <p>Šī piecdurvju ģimenes automobiļa dizains ir izteiksmīgi pārliecinošs un plats.</p>
+                <button class="learn-more" data-description="Audi A5 Sportback apvieno eleganci ar funkcionalitāti. Ar plašu iekštelpu un modernām tehnoloģijām, tas ir ideāls ikdienas automobilis.">Pievienot grozam</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kājene -->
+    <footer>
+        <p>&copy; 2024 Inf.Audi | Sekojiet mums: 
+            <a href="#" style="color: white;">Facebook</a> | 
+            <a href="#" style="color: white;">Twitter</a> | 
+            <a href="#" style="color: white;">Instagram</a>
+        </p>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Produkta Informācija</h2>
+            <p id="modal-description">Šeit būs vairāk informācijas par produktu.</p>
+        </div>
+    </div>
+
+    <script>
+        // Hamburger Menu
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Modal Functionality
+        const modal = document.getElementById("modal");
+        const learnMoreButtons = document.querySelectorAll('.learn-more');
+        const closeModal = document.querySelector('.close');
+        const modalDescription = document.getElementById("modal-description");
+
+        learnMoreButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const description = button.getAttribute('data-description');
+                modalDescription.textContent = description;
+                modal.style.display = "flex";
+            });
+        });
+
+        closeModal.addEventListener('click', () => {
+            modal.style.display = "none";
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+            // Tumšā režīma pārsla
+const toggleButton = document.getElementById('dark-mode-toggle');
+toggleButton.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode'); // Pievieno vai noņem dark-mode klasi uz body
+    document.querySelector('header').classList.toggle('dark-mode'); // Pievieno vai noņem dark-mode klasi uz galvenes
+    document.querySelector('footer').classList.toggle('dark-mode'); // Pievieno vai noņem dark-mode klasi uz kājenes
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => card.classList.toggle('dark-mode')); // Pievieno vai noņem dark-mode klasi uz kartītēm
+});
+
+        });
+    </script> 
+    
+</body>
+</html>
